@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Sentinels Dashboard</title>
+
+    <!-- FONTS -->
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap"
+        rel="stylesheet">
+
+    <link
+        href="https://db.onlinewebfonts.com/c/de54e55696de4441e90e41503b87bbf0?family=Migration+Sans+ITC+W01+Bold"
+        rel="stylesheet">
+
+    <!-- CSS -->
+
+    <link
+        rel="stylesheet"
+        href="../css/dashboard.css">
+
+    <!-- STREAM FIX: prevent layout reflow on reconnect -->
+    <style>
+        #cameraStream {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            /* prevents ghost space under img */
+            background: #000;
+            /* black while loading */
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- OVERLAYS -->
+
+    <div class="scanlines"></div>
+
+    <div class="vignette"></div>
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <!-- LOGO -->
+
+        <div class="logo-area">
+
+            <img
+                src="../icons/logo.png"
+                class="sidebar-logo"
+                alt="Sentinels Logo">
+
+            <h1 class="sidebar-title">
+
+                SENTINELS
+
+            </h1>
+
+            <p class="sidebar-subtitle">
+
+                SURVEILLANCE SYSTEM
+
+            </p>
+
+        </div>
+
+        <!-- NAVIGATION -->
+
+        <nav class="nav">
+
+            <a
+                href="#"
+                class="nav-item active">
+
+                <span>▣</span>
+
+                DASHBOARD
+
+            </a>
+
+            <a
+                href="/logs"
+                class="nav-item">
+
+                <span>☰</span>
+
+                LOGS
+
+            </a>
+
+        </nav>
+
+        <!-- FOOTER -->
+
+        <div class="sidebar-footer">
+
+            <div class="user">
+
+                ● ADMIN
+
+            </div>
+
+            <button class="logout-btn">
+
+                SIGN OUT
+
+            </button>
+
+        </div>
+
+    </aside>
+
+    <!-- MAIN -->
+
+    <main class="main">
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <h2>
+
+                LIVE DASHBOARD
+
+            </h2>
+
+            <div class="topbar-right">
+
+                <div id="clock"></div>
+
+                <div id="date"></div>
+
+            </div>
+
+        </header>
+
+        <!-- CONTENT -->
+
+        <div class="dashboard-content">
+
+            <!-- TOP CARDS -->
+
+            <section class="stats-row">
+
+                <div class="stat-card">
+
+                    <div class="stat-number">
+
+                        1
+
+                    </div>
+
+                    <div class="stat-label">
+
+                        CAMERA
+
+                    </div>
+
+                </div>
+
+                <div class="stat-card">
+
+                    <div class="stat-status">
+
+                        ONLINE
+
+                    </div>
+
+                    <div class="stat-label">
+
+                        STATUS
+
+                    </div>
+
+                </div>
+
+                <div class="stat-card">
+
+                    <div class="stat-alert">
+
+                        0
+
+                    </div>
+
+                    <div class="stat-label">
+
+                        ALERTS
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- MAIN GRID -->
+
+            <section class="main-grid">
+
+                <!-- CAMERA -->
+
+                <div class="camera-card">
+
+                    <div class="camera-header">
+
+                        <div class="camera-title">
+
+                            CAM 00 — MAIN CAMERA
+
+                        </div>
+
+                        <div class="camera-header-right">
+
+                            <div class="camera-live">
+
+                                <div class="camera-live-dot"></div>
+
+                                LIVE
+
+                            </div>
+
+                            <button
+                                id="fullscreenBtn">
+
+                                FULLSCREEN
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <!-- FEED -->
+
+                    <div class="camera-feed">
+
+                        <!-- EXIT BUTTON -->
+
+                        <button
+                            id="exitFullscreenBtn">
+
+                            ✕
+
+                        </button>
+
+                        <!--
+                            STREAM FIXES APPLIED:
+                            - decoding="async"     → browser decodes frames off main thread (less jank)
+                            - fetchpriority="high" → browser prioritizes this network request
+                            - onerror              → auto-reconnects after 1s if stream drops
+                                                     uses ?t= cache-bust ONLY on reconnect, not initial load
+                            - DO NOT set src via JS on page load — let the browser open
+                                                     the MJPEG connection directly and keep it open
+                        -->
+                        <img
+                            id="cameraStream"
+                            src="/proxy/stream/0"
+                            alt="Camera Feed"
+                            decoding="async"
+                            fetchpriority="high"
+                            onerror="setTimeout(() => { this.src = '/proxy/stream/0?t=' + Date.now(); }, 1000)">
+
+                    </div>
+
+                    <!-- SOURCE -->
+
+                    <div class="feed-source">
+
+                        SOURCE: CCTV IP CAMERA STREAM
+
+                    </div>
+
+                </div>
+
+                <!-- RECENT LOGS -->
+
+                <div class="logs-card">
+
+                    <div class="logs-title">
+
+                        RECENT LOGS
+
+                    </div>
+
+                    <div class="logs-list">
+
+                        <div class="log-item">
+
+                            <div class="log-title">
+
+                                Motion Detected
+
+                            </div>
+
+                            <div class="log-subtitle">
+
+                                CAM 00 • 11:41 PM
+
+                            </div>
+
+                        </div>
+
+                        <div class="log-item">
+
+                            <div class="log-title">
+
+                                Camera Online
+
+                            </div>
+
+                            <div class="log-subtitle">
+
+                                SYSTEM • ACTIVE
+
+                            </div>
+
+                        </div>
+
+                        <div class="log-item">
+
+                            <div class="log-title">
+
+                                User Login
+
+                            </div>
+
+                            <div class="log-subtitle">
+
+                                ADMIN • SUCCESS
+
+                            </div>
+
+                        </div>
+
+                        <div class="log-item">
+
+                            <div class="log-title">
+
+                                Stream Accessed
+
+                            </div>
+
+                            <div class="log-subtitle">
+
+                                LOCALHOST • ACTIVE
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+    <!-- JS -->
+
+    <script src="../js/dashboard.js"></script>
+
+</body>
+</html>

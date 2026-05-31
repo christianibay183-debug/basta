@@ -1,0 +1,8 @@
+[
+  {
+    "id": 0,
+    "name": "Main Camera",
+    "source": "rtsp://admin:admin123@192.168.1.10:554/cam/realmonitor?channel=1&subtype=0",
+    "location": "Main Area"
+  }
+]

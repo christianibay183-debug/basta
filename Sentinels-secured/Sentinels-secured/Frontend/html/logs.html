@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Sentinels Logs</title>
+
+    <!-- FONTS -->
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap"
+        rel="stylesheet">
+
+    <link
+        href="https://db.onlinewebfonts.com/c/de54e55696de4441e90e41503b87bbf0?family=Migration+Sans+ITC+W01+Bold"
+        rel="stylesheet">
+
+    <!-- CSS -->
+
+    <link
+        rel="stylesheet"
+        href="../css/logs.css">
+
+</head>
+
+<body>
+
+    <!-- OVERLAYS -->
+
+    <div class="scanlines"></div>
+
+    <div class="vignette"></div>
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <!-- LOGO -->
+
+        <div class="logo-area">
+
+            <img
+                src="../icons/logo.png"
+                class="sidebar-logo"
+                alt="Sentinels Logo">
+
+            <h1 class="sidebar-title">
+
+                SENTINELS
+
+            </h1>
+
+            <p class="sidebar-subtitle">
+
+                SURVEILLANCE SYSTEM
+
+            </p>
+
+        </div>
+
+        <!-- NAVIGATION -->
+
+        <nav class="nav">
+
+            <a
+                href="/dashboard"
+                class="nav-item">
+
+                <span>▣</span>
+
+                DASHBOARD
+
+            </a>
+
+            <a
+                href="#"
+                class="nav-item active">
+
+                <span>☰</span>
+
+                LOGS
+
+            </a>
+
+        </nav>
+
+        <!-- FOOTER -->
+
+        <div class="sidebar-footer">
+
+            <div class="user">
+
+                ● ADMIN
+
+            </div>
+
+            <button class="logout-btn">
+
+                SIGN OUT
+
+            </button>
+
+        </div>
+
+    </aside>
+
+    <!-- MAIN -->
+
+    <main class="main">
+
+        <!-- HEADER -->
+
+        <header class="topbar">
+
+            <h2>
+
+                SYSTEM LOGS
+
+            </h2>
+
+            <div class="topbar-right">
+
+                <div class="live-status">
+
+                    <div class="live-dot"></div>
+
+                    LIVE
+
+                </div>
+
+                <div id="clock"></div>
+
+                <div id="date"></div>
+
+            </div>
+
+        </header>
+
+        <!-- CONTENT -->
+
+        <div class="logs-page-content">
+
+            <!-- STATS -->
+
+            <section class="log-stats">
+
+                <div class="log-stat-card">
+
+                    <div class="log-stat-number blue">
+
+                        200
+
+                    </div>
+
+                    <div class="log-stat-label">
+
+                        TOTAL
+
+                    </div>
+
+                </div>
+
+                <div class="log-stat-card">
+
+                    <div class="log-stat-number red">
+
+                        4
+
+                    </div>
+
+                    <div class="log-stat-label">
+
+                        ERRORS
+
+                    </div>
+
+                </div>
+
+                <div class="log-stat-card">
+
+                    <div class="log-stat-number green">
+
+                        8
+
+                    </div>
+
+                    <div class="log-stat-label">
+
+                        LOGINS
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- SEARCH + FILTER -->
+
+            <section class="logs-toolbar">
+
+                <input
+                    type="text"
+                    placeholder="FILTER LOGS..."
+                    class="search-input">
+
+                <div class="filter-buttons">
+
+                    <button class="filter-btn active">
+
+                        ALL
+
+                    </button>
+
+                    <button class="filter-btn">
+
+                        LOGIN
+
+                    </button>
+
+                    <button class="filter-btn">
+
+                        STREAM
+
+                    </button>
+
+                    <button class="filter-btn">
+
+                        FAILED
+
+                    </button>
+
+                </div>
+
+            </section>
+
+            <!-- LOG TABLE -->
+
+            <section class="logs-table-card">
+
+                <div class="logs-table-header">
+
+                    <div>TIME</div>
+
+                    <div>TYPE</div>
+
+                    <div>EVENT</div>
+
+                </div>
+
+                <div class="logs-table-body">
+
+                    <!-- ROW -->
+
+                    <div class="log-row">
+
+                        <div class="log-time">
+
+                            2026-05-20 02:48:13
+
+                        </div>
+
+                        <div class="log-type info">
+
+                            INFO
+
+                        </div>
+
+                        <div class="log-event">
+
+                            USER=admin | STREAM_ACCESS cam=0
+
+                        </div>
+
+                    </div>
+
+                    <!-- ROW -->
+
+                    <div class="log-row">
+
+                        <div class="log-time">
+
+                            2026-05-20 02:47:02
+
+                        </div>
+
+                        <div class="log-type success">
+
+                            LOGIN
+
+                        </div>
+
+                        <div class="log-event">
+
+                            ADMIN LOGIN SUCCESSFUL
+
+                        </div>
+
+                    </div>
+
+                    <!-- ROW -->
+
+                    <div class="log-row">
+
+                        <div class="log-time">
+
+                            2026-05-20 02:44:31
+
+                        </div>
+
+                        <div class="log-type warning">
+
+                            ALERT
+
+                        </div>
+
+                        <div class="log-event">
+
+                            MOTION DETECTED ON CAM 00
+
+                        </div>
+
+                    </div>
+
+                    <!-- ROW -->
+
+                    <div class="log-row">
+
+                        <div class="log-time">
+
+                            2026-05-20 02:41:20
+
+                        </div>
+
+                        <div class="log-type failed">
+
+                            FAILED
+
+                        </div>
+
+                        <div class="log-event">
+
+                            FAILED LOGIN ATTEMPT DETECTED
+
+                        </div>
+
+                    </div>
+
+                    <!-- ROW -->
+
+                    <div class="log-row">
+
+                        <div class="log-time">
+
+                            2026-05-20 02:40:10
+
+                        </div>
+
+                        <div class="log-type info">
+
+                            STREAM
+
+                        </div>
+
+                        <div class="log-event">
+
+                            CAMERA STREAM INITIALIZED
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+    <!-- JS -->
+
+    <script src="../js/logs.js"></script>
+
+</body>
+</html>

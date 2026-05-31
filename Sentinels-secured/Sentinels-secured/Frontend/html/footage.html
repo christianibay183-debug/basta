@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% block title %}Footage — Sentinels{% endblock %}
+{% block page_title %}FOOTAGE ARCHIVE{% endblock %}
+
+{% block extra_head %}
+<style>
+  .search-bar {
+    display:flex; gap:12px; margin-bottom:22px;
+  }
+  .search-bar input {
+    flex:1; background:var(--panel2); border:1px solid var(--border);
+    color:var(--text); font-family:'Share Tech Mono',monospace;
+    font-size:0.85rem; padding:10px 14px; outline:none;
+  }
+  .search-bar input:focus { border-color:var(--accent); }
+
+  .footage-table { width:100%; border-collapse:collapse; }
+  .footage-table th {
+    font-family:'Share Tech Mono',monospace; font-size:0.65rem;
+    letter-spacing:3px; color:var(--dim); text-align:left;
+    padding:10px 14px; border-bottom:1px solid var(--border);
+    background:var(--panel2);
+  }
+  .footage-table td {
+    padding:11px 14px; border-bottom:1px solid rgba(26,58,92,0.5);
+    font-size:0.85rem; font-family:'Share Tech Mono',monospace;
+  }
+  .footage-table tr:hover td { background:rgba(0,229,255,0.03); }
+  .footage-table .fname { color:var(--text); }
+  .footage-table .fsize { color:var(--dim); }
+  .footage-table .fdate { color:var(--dim); font-size:0.78rem; }
+  .footage-table .ftype {
+    display:inline-block; padding:2px 8px; font-size:0.65rem;
+    border:1px solid; letter-spacing:2px;
+  }
+  .ftype.video { color:var(--accent); border-color:rgba(0,229,255,0.3); }
+  .ftype.image { color:var(--green); border-color:rgba(34,255,136,0.3); }
+  .ftype.other { color:var(--dim); border-color:var(--border); }
+  .dl-btn {
+    color:var(--accent); text-decoration:none; font-size:0.72rem;
+    letter-spacing:2px; border:1px solid rgba(0,229,255,0.3);
+    padding:3px 10px; transition:all 0.2s;
+  }
+  .dl-btn:hover { background:rgba(0,229,255,0.1); }
+  .empty-state {
+    text-align:center; padding:80px 20px;
+    color:var(--dim); font-family:'Share Tech Mono',monospace;
+  }
+  .empty-state .big { font-size:3rem; margin-bottom:12px; opacity:0.3; }
+  .empty-state p { font-size:0.8rem; letter-spacing:2px; line-height:2; }
+
+  .count-badge {
+    font-family:'Share Tech Mono',monospace; font-size:0.7rem;
+    color:var(--dim); margin-bottom:14px; letter-spacing:2px;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="search-bar">
+  <input type="text" id="search" placeholder="SEARCH FOOTAGE..." oninput="filterTable()"/>
+</div>
+
+<div class="count-badge" id="count-label">{{ media|length }} FILE(S) IN ARCHIVE</div>
+
+{% if media %}
+<table class="footage-table" id="ftable">
+  <thead>
+    <tr>
+      <th>FILENAME</th>
+      <th>TYPE</th>
+      <th>SIZE</th>
+      <th>MODIFIED</th>
+      <th>ACTION</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for f in media %}
+    <tr>
+      <td class="fname">{{ f.name }}</td>
+      <td>
+        {% if f.ext in ['.mp4','.avi','.mov','.mkv','.ts'] %}
+          <span class="ftype video">VIDEO</span>
+        {% elif f.ext in ['.jpg','.jpeg','.png','.bmp'] %}
+          <span class="ftype image">IMAGE</span>
+        {% else %}
+          <span class="ftype other">FILE</span>
+        {% endif %}
+      </td>
+      <td class="fsize">{{ (f.size / 1024)|round(1) }} KB</td>
+      <td class="fdate">{{ f.modified }}</td>
+      <td><a class="dl-btn" href="/footage/file/{{ f.name }}">DOWNLOAD</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<div class="empty-state">
+  <div class="big">🎞</div>
+  <p>NO FOOTAGE FOUND<br>PLACE CCTV RECORDINGS IN THE cctv_footage/ FOLDER</p>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+function filterTable(){
+  const q = document.getElementById('search').value.toLowerCase();
+  const rows = document.querySelectorAll('#ftable tbody tr');
+  let visible = 0;
+  rows.forEach(r => {
+    const match = r.textContent.toLowerCase().includes(q);
+    r.style.display = match ? '' : 'none';
+    if(match) visible++;
+  });
+  document.getElementById('count-label').textContent = visible + ' FILE(S) SHOWN';
+}
+</script>
+{% endblock %}
